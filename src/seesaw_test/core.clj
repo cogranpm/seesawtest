@@ -19,13 +19,41 @@
 (def txtdocs (make-text-multi))
 (def btndocs (make-button "run"))
 
+
+(defn writein [line]
+  (text! txtdocs (str (text txtdocs) line "\n" ":---------\n\n" )))
+
+
+
 (defn syntax []
-  (str "multi line string
-is here don't you know \n"
-       "here is some call \n"
-       "I am awaiting it"
-   )
+  (writein "hello there")
+  (writein (str
+   "if then else is a bit different
+(if boolean-form then-form optional-else form \n"
+       "(if true 
+         something
+         something else) \n"
+       (if true
+         "zeus"
+         "aquaman")
+       "\n\n"
+       "multiline if use the do operator \n"
+       "(if true
+(do something1
+something2)
+(do somethingelse1
+somethingelse2)"
+       "when operator: combo if and do with no else branch
+(when true 
+  something1
+  something2)\n\n"
+
+       
+   ))
   )
+
+(defn docs []
+  (syntax))
 
 (defn refresh-action-handler [e]
   (println "handler invoked"))
@@ -54,7 +82,7 @@ is here don't you know \n"
 
 (defn add-behaviours
   [root]
-  (listen btndocs :action (fn [e] (config! txtdocs :text (syntax))))
+  (listen btndocs :action (fn [e] (docs)))
   (config! (select root [:.refresh]) :action refresh-action)
   (config! (select root [:.quit]) :action quit-action)
   root)
@@ -64,7 +92,6 @@ is here don't you know \n"
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!")
   (native!)
   (invoke-later
    (-> (frame :title "Hello"

@@ -33,7 +33,7 @@
   )
 
 (defn make-text-multi
-  [caption]
+  []
   (text :multi-line? true))
 
 (defn make-items
@@ -41,8 +41,8 @@
   [
    ["name:"] [(text)]
    ["age:"] [(text)]
-   ["button:"] [(make-button "fred")]
-   ["docs:"] [(make-text-multi "fred")]
+   ["button:"] [(make-button "run")]
+   ["docs:"] [(make-text-multi)]
    ] )
 
 

@@ -5,6 +5,27 @@
   (:use seesaw.mig)
   )
 
+(defn make-button
+  [caption]
+  (button :text caption)
+  )
+
+(defn make-text-multi
+  []
+  (text :multi-line? true :font "MONOSPACED-PLAIN-14"))
+
+
+                                        ;tutorial stuff
+(def txtdocs (make-text-multi))
+(def btndocs (make-button "run"))
+
+(defn syntax []
+  (str "multi line string
+is here don't you know \n"
+       "here is some call \n"
+       "I am awaiting it"
+   )
+  )
 
 (defn refresh-action-handler [e]
   (println "handler invoked"))
@@ -20,30 +41,24 @@
 (def quit-action
   (action :name "Quit" :key "menu Q" :handler quit-action-handler))
 
-(defn add-behaviours
-  [root]
-  
-  (config! (select root [:.refresh]) :action refresh-action)
-  (config! (select root [:.quit]) :action quit-action)
-  root)
-
-(defn make-button
-  [caption]
-  (button :text caption)
-  )
-
-(defn make-text-multi
-  []
-  (text :multi-line? true))
 
 (defn make-items
   []
   [
    ["name:"] [(text)]
    ["age:"] [(text)]
-   ["button:"] [(make-button "run")]
-   ["docs:"] [(make-text-multi)]
+   ["button:"] [btndocs]
+   ["docs:"] [txtdocs]
    ] )
+
+
+(defn add-behaviours
+  [root]
+  (listen btndocs :action (fn [e] (config! txtdocs :text (syntax))))
+  (config! (select root [:.refresh]) :action refresh-action)
+  (config! (select root [:.quit]) :action quit-action)
+  root)
+
 
 
 (defn -main

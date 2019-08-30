@@ -49,7 +49,21 @@ somethingelse2)"
   something2)\n\n"
 
        
-   ))
+       ))
+
+  (writein "check for nil use nil?")
+  (writein "(nil? someval)")
+
+  ;trying out some let and def bindings within a function
+  (let [myname "paul"]
+    (writein myname))
+  (def lemare "lemare")
+  (writein lemare)
+
+                                        ;equality
+  (if (= 1 1) (writein "1 = 1"))
+
+
   )
 
 (defn docs []

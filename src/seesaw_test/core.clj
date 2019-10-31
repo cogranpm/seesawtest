@@ -24,7 +24,7 @@
   (text! txtdocs (str (text txtdocs) line "\n" ":---------\n\n" )))
 
 
-
+;;just to put some stuff in the multiline text box
 (defn syntax []
   (writein "hello there")
   (writein (str
@@ -125,7 +125,8 @@ somethingelse2)"
                         :constraints ["wrap2" "[shrink 0]20px[200, grow, fill]" "[shrink 0]5px[]5px[]20px[grow, fill]"]
                         :items (make-items)
                         )
-              :on-close :exit
+              ;;get rid of the following or the repl will die when window is closed
+              ;;:on-close :exit
               :menubar
               (menubar :items
                        [(menu :text "File" :items [(menu-item :class :refresh) (menu-item :class :quit)])

@@ -103,6 +103,17 @@ somethingelse2)"
 
 
 
+;;note the use of mig panel
+;;you provide the layout for each column of each row in a string
+;;
+;;
+;;type of grid:
+;;["wrap2"
+;;row1:
+;;"[shrink 0]20px[200, grow, fill]"
+;;row2:
+;;"[shrink 0]5px[]5px[]20px[grow, fill]"]
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]

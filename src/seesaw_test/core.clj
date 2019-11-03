@@ -2,6 +2,7 @@
 (ns seesaw-test.core
   (:gen-class)
   (:use seesaw.core)
+  (:use seesaw.dev)
   (:use seesaw.mig)
   )
 
@@ -14,10 +15,16 @@
   []
   (text :multi-line? true :font "MONOSPACED-PLAIN-14"))
 
-
+(defn make-combo
+  []
+  (combobox  :model {1 "one" 2 "two" 3 "three"}))
+  ;;(combobox :model ["one" "two" "three"]))
                                         ;tutorial stuff
 (def txtdocs (make-text-multi))
 (def btndocs (make-button "run"))
+
+;;combo box with data
+(def cboTest (make-combo))
 
 
 (defn writein [line]
@@ -89,6 +96,7 @@ somethingelse2)"
   [
    ["name:"] [(text)]
    ["age:"] [(text)]
+   ["combo"] [cboTest]
    ["button:"] [btndocs]
    ["docs:"] [txtdocs]
    ] )

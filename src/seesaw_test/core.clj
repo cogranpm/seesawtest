@@ -20,11 +20,6 @@
   )
 
 
-;; can call this to change what displays in the frame
-(defn display [content]
-  (config! main-frame :content content)
-  content)
-
 
 (defn make-button
   [caption]
@@ -144,6 +139,11 @@ somethingelse2)"
                   [(menu :text "File" :items [(menu-item :class :refresh) (menu-item :class :quit)])
                    (menu :text "Edit" :items [(menu-item :class :quit)])]))
   )
+
+;; can call this to change what displays in the frame
+(defn display [content]
+  (config! main-frame :content content)
+  content)
 
 
 ;;note the use of mig panel

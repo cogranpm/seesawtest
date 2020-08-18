@@ -1,9 +1,29 @@
+;; notes on repl style dev ie sending buffer to cider and trying stuff out
+;; frame is defined as a var in main_frame
+;; examples
+;; https://gist.github.com/daveray/1441520
+;; put content in the frame f
+;; (config! f :content lbl)
+;; (config! txtDocs :background :pink :foreground "#00f")
+;; a function to display some content
+;; (defn display [content]
+;;(config! f :content content)
+;; content)
+
+
 
 (ns seesaw-test.core
   (:gen-class)
   (:use seesaw.core)
   (:use seesaw.mig)
   )
+
+
+;; can call this to change what displays in the frame
+(defn display [content]
+  (config! main-frame :content content)
+  content)
+
 
 (defn make-button
   [caption]
@@ -102,6 +122,21 @@ somethingelse2)"
   root)
 
 
+(def main-frame
+  (frame :title "Hello"
+         :size [600 :by 600]
+         :content (mig-panel
+                   :constraints ["wrap2" "[shrink 0]20px[200, grow, fill]" "[shrink 0]5px[]5px[]20px[grow, fill]"]
+                   :items (make-items)
+                   )
+         ;;get rid of the following or the repl will die when window is closed
+         ;;:on-close :exit
+         :menubar
+         (menubar :items
+                  [(menu :text "File" :items [(menu-item :class :refresh) (menu-item :class :quit)])
+                   (menu :text "Edit" :items [(menu-item :class :quit)])]))
+  )
+
 
 ;;note the use of mig panel
 ;;you provide the layout for each column of each row in a string
@@ -119,18 +154,7 @@ somethingelse2)"
   [& args]
   (native!)
   (invoke-later
-   (-> (frame :title "Hello"
-              :size [600 :by 600]
-              :content (mig-panel
-                        :constraints ["wrap2" "[shrink 0]20px[200, grow, fill]" "[shrink 0]5px[]5px[]20px[grow, fill]"]
-                        :items (make-items)
-                        )
-              ;;get rid of the following or the repl will die when window is closed
-              ;;:on-close :exit
-              :menubar
-              (menubar :items
-                       [(menu :text "File" :items [(menu-item :class :refresh) (menu-item :class :quit)])
-                        (menu :text "Edit" :items [(menu-item :class :quit)])]))
+   (-> main-frame 
        add-behaviours
        show!)
    ))

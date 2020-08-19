@@ -11,6 +11,76 @@
 ;; content)
 
 
+;; (config! widget :property value)   to change stuff
+;; (config widget :property) to get value of stuff
+;; frame has a :content property you can use to set the guts of item
+;; create a label -> (def name (label "some text"))
+
+;; set up some colors - can use css color names and codes
+;; set multiple properties in a single config! call
+;; (config! widget :background :pink :foreground "#00f")
+
+;; change font
+;; (config! widget :font "ARIAL-BOLD-21")
+;; or use (font :name :monospaced
+;;        :style #{:bold :italic}
+;;        :size 18)
+
+;; button
+;;(def b (button :text "Click me"))
+;; event handler most of the time e arg is the widget that triggered event
+;; the action does not have to return a function it can just do some stuff
+;; (listen widget :action (fn [e] (some action)))
+;; can do multiple handlers at once
+;; note that % parameter is the event argument, which is usually the widget
+;; (listen widget :mouse-entered #(config! % :foreground :blue)
+;;                :mouse-exited #(config! % :foreground :red))
+
+
+;; list boxes - :model takes any sequence (finite), displays using str
+;; (def lb (listbox :model (-> 'seesaw.core ns-publics keys sort)))
+;; to make it scroll
+;; (scrollable lb)
+
+;; selections
+;; (selection lb)
+;; returns nil if no selection
+;; otherwise you get the item from the model
+;; multiple selection 
+;; (selection lb {:multi? true})
+;;set the selection:
+;;(selection! widget 'value)
+;; selection change event:
+;; (listen widget :selection (fn [e] (println "seleciton is " (selection e))))
+
+
+;;Text boxes
+;; (text "this is the text")
+;; query the text
+;;(text widget)
+;; change the text
+;; (text! widget "new value")
+;; multi line
+;; (text :multi-line? true :text "some text")
+;; you can auto insert from certain "readable" objects
+;; (text! widget (java.net.URL. "http://clojure.com"))
+;; put it in a scrollable
+;; use (scroll! widget :to [:line 50])  or could be :top or :bottom
+
+;; Splitter
+;; (split (left-right-split (scrollable widget-1) (scrollable widget-2) :divider-location 1/3))
+;;
+;; Border panel
+;; (border-panel
+;;   :north (horizontal-panel :items widgets))
+;;   :center split
+;;   :vgap 5 :hgap 5 :border 5))
+
+
+
+
+
+
 
 (ns seesaw-test.core
   (:gen-class)
@@ -124,8 +194,8 @@ somethingelse2)"
   (config! (select root [:.quit]) :action quit-action)
   root)
 
-
-(def main-frame
+(defn make-frame []
+  (native!)
   (frame :title "Hello"
          :size [600 :by 600]
          :content (mig-panel
@@ -138,7 +208,13 @@ somethingelse2)"
          (menubar :items
                   [(menu :text "File" :items [(menu-item :class :refresh) (menu-item :class :quit)])
                    (menu :text "Edit" :items [(menu-item :class :quit)])]))
+
   )
+
+
+(def main-frame
+  (make-frame)
+    )
 
 ;; can call this to change what displays in the frame
 (defn display [content]
